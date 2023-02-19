@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Здравствуйте,
+
+Спасибо за регистрацию на нашем сайте, пожалуйста, пройдите по ссылке.
+
+http://{{ domain }}{% url 'verification' uidb64=uid token=token %}
+
+{% endautoescape %}

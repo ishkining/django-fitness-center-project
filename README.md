@@ -1,0 +1,1 @@
+# django-fitness-center-project

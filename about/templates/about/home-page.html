@@ -1,1 +1,38 @@
 {% extends "./base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div
+  class="bg-image d-flex justify-content-center align-items-center"
+  style="
+    background-image: url('{% static 'media/images/main_home_page2.jpg' %}');
+    height: 75vh;
+  "
+>
+  <div class="container">
+    <div class="row row-cols-1">
+      <div class="col">
+        <h2 class="elementor-heading-title elementor-size-default text-info">
+          СИЛЬНЫЕ ЛЮДИ
+          <br>
+          ПОМОГУТ ТЕБЕ СДЕЛАТЬ
+          <br>
+          РЕАЛЬНЫЙ ПРОГРЕСС.
+          <br>
+        </h2>
+        <a
+          type="button"
+          role="button"
+          href="{% url 'register' %}"
+          class="btn btn-info btn-outline-primary"
+          >
+          <i class="fa fa-id-badge" aria-hidden="true"></i>
+      &nbsp;        &nbsp;Зарегистрироваться
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

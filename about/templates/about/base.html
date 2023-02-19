@@ -49,39 +49,44 @@
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white " type="button" href="">
-                    Расписание
+                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                    &nbsp;Расписание
                 </a>
             </li>
-            &nbsp;&nbsp;
+            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white " type="button" href="">
-                    Залы
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                    &nbsp;Залы
                 </a>
             </li>
-            &nbsp;&nbsp;
+            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
-                    Тренера
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                    &nbsp;Тренера
                 </a>
             </li>
-            &nbsp;&nbsp;
+            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
-                    Почему стоит выбрать нас?
+                    <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                    &nbsp;Почему стоит выбрать нас?
                 </a>
             </li>
-            &nbsp;&nbsp;
+            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
-                    Блог
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    &nbsp;Блог
                 </a>
             </li>
-            &nbsp;&nbsp;
+            &nbsp;
             <li class="nav-item">
                 <a
                 type="button"
                 role="button"
-                href=""
+                href="{% url 'register' %}"
                 class="btn btn-outline-secondary"
                 >
                 <i class="fa fa-id-badge" aria-hidden="true"></i>
@@ -91,5 +96,7 @@
         </ul>
     </div>
 </nav>
+{% block content %}
+{% endblock %}
 </body>
 </html>

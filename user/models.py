@@ -19,7 +19,7 @@ class UserInfo(models.Model):
     phone_number = models.CharField(max_length=10)
 
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    category = models.ForeignKey(CategoryPerson, on_delete=models.PROTECT)
+    category = models.ForeignKey(CategoryPerson, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Images(models.Model):

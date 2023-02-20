@@ -7,15 +7,15 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 
-from .forms import UserCreationForm
+from .forms import NewUserForm
 from .token import user_tokenizer_generate
 
 
 def register(request):
-    form = UserCreationForm()
+    form = NewUserForm()
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.is_active = False
@@ -30,7 +30,7 @@ def register(request):
                                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                                            'token': user_tokenizer_generate.make_token(user),
                                        })
-            user.email(subject, message=message)
+            user.email(subject=subject, message=message)
             return redirect('verification-sent')
 
     context = {

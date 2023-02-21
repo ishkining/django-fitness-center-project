@@ -13,6 +13,9 @@ CATEGORIES = [
 class CategoryPerson(models.Model):
     category = models.CharField(max_length=1, choices=CATEGORIES, unique=True)
 
+    class Meta:
+        verbose_name_plural = 'Категории'
+
 
 class UserInfo(models.Model):
     middle_name = models.CharField(max_length=100)
@@ -21,6 +24,9 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     category = models.ForeignKey(CategoryPerson, on_delete=models.SET_NULL, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Информация о пользователях'
+
 
 class Images(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE,
@@ -28,3 +34,6 @@ class Images(models.Model):
     space = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE,
                                  related_name='space_id')
     description = models.TextField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Изображения'

@@ -14,9 +14,8 @@
 
 <br>
 <div class="container bg-white shadow-md p-5 form-layout">
-    <h3> Создаем аккаунт </h3>
+    <h3 class="text-center"> Создаем аккаунт </h3>
     <hr>
-    <br><br>
 
     <form method="post" autocomplete="off">
         {% csrf_token %}
@@ -34,7 +33,7 @@
         </button>
         <br><br>
         <div class="text-center">
-            <a href="">У меня уже есть аккаунт</a>
+            <a href="{% url 'login' %}">У меня уже есть аккаунт</a>
         </div>
     </form>
 </div>

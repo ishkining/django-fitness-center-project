@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+
+from django.forms.widgets import PasswordInput, TextInput
 
 
 class NewUserForm(UserCreationForm):
@@ -23,3 +25,9 @@ class NewUserForm(UserCreationForm):
             raise forms.ValidationError('Your email is toooo long')
 
         return email
+
+
+class LoginForm(AuthenticationForm):
+
+    class Meta:
+        fields = ['username', 'password']

@@ -1,4 +1,43 @@
+body{
+    font-family: 'Roboto Slab', serif;
+}
+
 .form-layout {
     border-radius: 20px;
     width: 500px;
+}
+
+#home-words{
+    font-weight: 900;
+    line-height: 1.8;
+    text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+             1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+}
+
+.underlined {
+  position: relative;
+}
+
+.underline-clip:after {
+  content: '';
+  position: absolute;
+  top: 95%;
+  width: 150%;
+  aspect-ratio: 3 / 1;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 50%;
+  clip-path: polygon(0 0, 50% 50%, 100% 0);
+}
+
+.underline-clip-red:after{
+  border: 6px solid hsl(130, 80%, 50%);
+}
+
+.underline-clip-violet:after{
+  border: 6px solid hsl(300, 76%, 72%);
+}
+
+.underline-clip-orange:after{
+  border: 6px solid hsl(15, 100%, 72%);
 }

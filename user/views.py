@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 
 from django.template.loader import render_to_string
@@ -7,7 +6,10 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 
-from .forms import NewUserForm
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User, auth
+
+from .forms import NewUserForm, LoginForm
 from .token import user_tokenizer_generate
 
 
@@ -30,7 +32,7 @@ def register(request):
                                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                                            'token': user_tokenizer_generate.make_token(user),
                                        })
-            user.email(subject=subject, message=message)
+            user.email_user(subject=subject, message=message)
             return redirect('verification-sent')
 
     context = {
@@ -39,11 +41,40 @@ def register(request):
     return render(request, 'user/register.html', context)
 
 
+def login(request):
+    form = LoginForm()
+
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth.login(request, user)
+                return redirect('home-page')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'user/login.html', context)
+
+
+def logout(request):
+    try:
+        for key in list(request.session.keys()):
+            del request.session[key]
+    except KeyError:
+        pass
+
+    return redirect('home-page')
+
+
 def verification(request, uidb64, token):
     unique_id = force_str(urlsafe_base64_decode(uidb64))
     user = User.objects.get(pk=unique_id)
 
-    if user and user_tokenizer_generate.check_token(user,token):
+    if user and user_tokenizer_generate.check_token(user, token):
         user.is_active = True
         user.save()
         return redirect('verification-success')

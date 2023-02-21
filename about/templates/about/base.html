@@ -25,6 +25,10 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
 
 
@@ -56,35 +60,31 @@
                     &nbsp;Расписание
                 </a>
             </li>
-            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white " type="button" href="">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
                     &nbsp;Залы
                 </a>
             </li>
-            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
                     <i class="fa fa-trophy" aria-hidden="true"></i>
                     &nbsp;Тренера
                 </a>
             </li>
-            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
                     <i class="fa fa-question-circle-o" aria-hidden="true"></i>
                     &nbsp;Почему стоит выбрать нас?
                 </a>
             </li>
-            &nbsp;
             <li class="nav-item">
                 <a class="btn btn-alert navbar-btn text-white" type="button" href="">
                     <i class="fa fa-book" aria-hidden="true"></i>
                     &nbsp;Блог
                 </a>
             </li>
-            &nbsp;
+            {% if not user.is_authenticated %}
             <li class="nav-item">
                 <a
                 type="button"
@@ -93,9 +93,34 @@
                 class="btn btn-outline-secondary"
                 >
                 <i class="fa fa-id-badge" aria-hidden="true"></i>
-        &nbsp;        &nbsp;Зарегистрироваться
+                &nbsp;Регистрация
                 </a>
             </li>
+            &nbsp;
+            <li class="nav-item">
+                <a
+                type="button"
+                role="button"
+                href="{% url 'login' %}"
+                class="btn btn-outline-secondary"
+                >
+                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                &nbsp;Вход
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a
+                type="button"
+                role="button"
+                href="{% url 'logout' %}"
+                class="btn btn-outline-secondary"
+                >
+                <i class="fa fa-sign-out" aria-hidden="true"> </i>
+                &nbsp;Выйти
+                </a>
+            </li>
+            {% endif %}
             &nbsp;
         </ul>
     </div>

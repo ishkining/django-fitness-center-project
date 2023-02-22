@@ -6,6 +6,8 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
 
+    path('trainers/', views.trainers_info, name='trainers-info'),
+
     path('verification/<str:uidb64>/<str:token>/', views.verification, name='verification'),
     path('verification-sent', views.verification_sent, name='verification-sent'),
     path('verification-success', views.verification_success, name='verification-success'),

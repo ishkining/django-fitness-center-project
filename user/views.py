@@ -12,6 +12,8 @@ from django.contrib.auth.models import User, auth
 from .forms import NewUserForm, LoginForm
 from .token import user_tokenizer_generate
 
+from .models import UserInfo, CategoryPerson, Images
+
 
 def register(request):
     form = NewUserForm()
@@ -68,6 +70,18 @@ def logout(request):
         pass
 
     return redirect('home-page')
+
+
+def trainers_info(request):
+    category = CategoryPerson.objects.get(category='T')
+    trainers = UserInfo.objects.filter(category=category)
+    images = Images.objects.filter(user__id=F('user_info__id'))
+    print(trainers)
+    print(images)
+    context = {
+        'trainers': trainers
+    }
+    return render(request, 'trainer/trainers-info.html', context)
 
 
 def verification(request, uidb64, token):

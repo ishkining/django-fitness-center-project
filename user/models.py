@@ -33,6 +33,9 @@ class UserInfo(models.Model):
     class Meta:
         verbose_name_plural = 'Информация о пользователях'
 
+    def get_full_name(self):
+        return f'{self.user.last_name} {self.user.first_name} {self.middle_name}'
+
     def __str__(self):
         return f'{self.user}'
 
@@ -48,6 +51,12 @@ class Images(models.Model):
     class Meta:
         verbose_name_plural = 'Изображения'
 
+    def __str__(self):
+        if self.user:
+            return f'{self.user} #{self.id}'
+        else:
+            return f'Комната - {self.space} #{self.id}'
+
 
 class Reviews(models.Model):
     stars = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
@@ -58,5 +67,9 @@ class Reviews(models.Model):
     trainer = models.ForeignKey(UserInfo, on_delete=models.CASCADE, related_name='trainers')
 
     class Meta:
+        verbose_name_plural = 'Отзывы'
         unique_together = (('user', 'trainer'),)
         index_together = (('user', 'trainer'),)
+
+    def __str__(self):
+        return f'Звезд - {self.stars} от: {self.user} кому: {self.trainer}'

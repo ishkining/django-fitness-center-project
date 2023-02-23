@@ -12,7 +12,9 @@ from django.contrib.auth.models import User, auth
 from .forms import NewUserForm, LoginForm
 from .token import user_tokenizer_generate
 
-from .models import UserInfo, CategoryPerson, Images
+from .models import UserInfo, CategoryPerson, Images, Reviews
+
+from django.db.models import Sum, Count
 
 
 def register(request):
@@ -73,11 +75,10 @@ def logout(request):
 
 
 def trainers_info(request):
-    category = CategoryPerson.objects.get(category='T')
-    trainers = UserInfo.objects.filter(category=category)
-    images = Images.objects.filter(user__id=F('user_info__id'))
-    print(trainers)
-    print(images)
+    trainer_category = CategoryPerson.objects.get(category='T')
+    trainers = Images.objects.filter(user__category=trainer_category)
+    reviews = Reviews.objects.all().order_by('trainer_id').annotate(total_done=Count("*"), total_stars=Sum("stars"))
+    print(reviews.values())
     context = {
         'trainers': trainers
     }

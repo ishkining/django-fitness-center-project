@@ -17,15 +17,24 @@
                      src="{{ trainer.image.url }}">
             </div>
             <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
-                <a href="" class="text-info">
+                <a href="{% url 'trainer-info' trainer.id %}" class="text-info">
                     <h1 class="h5 pt-2"> {{trainer.user.get_full_name}} </h1>
                 </a>
                 <div class="border">
                     <div class="col border-bottom">
                         <div class="row p-3">
-                            <div class="col-6"> Product</div>
-                            <div class="col-6 text-end"><span
-                                    class="h6 fw-bold">$ 1 </span></div>
+                            <div class="col-6">
+                                {% for key, value in reviews_stars.items %}
+                                    {% if key == trainer.id %}
+                                        {% for i in value.2|get_range %}
+                                            <i class="fa fa-star text-success" aria-hidden="true"></i>
+                                        {% endfor %}
+                                        {% for i in value.3|get_range %}
+                                            <i class="fa fa-star-o text-success" aria-hidden="true"></i>
+                                        {% endfor %}
+                                        Всего отзывов ({{ value.1 }})
+                                    {% endif %}
+                                {% endfor %}</div>
                         </div>
                     </div>
                     <div class="col">
@@ -39,28 +48,7 @@
             </div>
         </div>
         {% endfor %}
-
-
-        <div class="col-12 text-end">
-
-            <div class="h6 fw-bold"> Sub total: $
-                <div id="total" class="d-inline-flex"></div>
-            </div>
-
-            <br>
-
-            <a href="" class="btn btn-primary my-2">
-            Proceed to checkout </a>
-
-        </div>
-
-
-
-
     </div>
-
-
 </main>
-
 {% endblock %}
 

@@ -16,6 +16,13 @@ from .models import UserInfo, CategoryPerson, Images, Reviews
 
 from django.db.models import Sum, Count
 
+from django.template.defaulttags import register
+
+
+@register.filter
+def get_range(value):
+    return range(value)
+
 
 def register(request):
     form = NewUserForm()
@@ -77,12 +84,29 @@ def logout(request):
 def trainers_info(request):
     trainer_category = CategoryPerson.objects.get(category='T')
     trainers = Images.objects.filter(user__category=trainer_category)
-    reviews = Reviews.objects.all().order_by('trainer_id').annotate(total_done=Count("*"), total_stars=Sum("stars"))
-    print(reviews.values())
+    reviews_stars = {}
+    reviews = Reviews.objects.all()
+    for review in reviews:
+        if reviews_stars.get(review.trainer_id, None):
+            reviews_stars[review.trainer_id][0] += review.stars
+            reviews_stars[review.trainer_id][1] += 1
+            reviews_stars[review.trainer_id][2] = reviews_stars[review.trainer_id][0] // \
+                                                  reviews_stars[review.trainer_id][1]
+            reviews_stars[review.trainer_id][3] = 5 - reviews_stars[review.trainer_id][2]
+
+        else:
+            reviews_stars[review.trainer_id] = [review.stars, 1, review.stars, 5 - review.stars]
+
+    print(reviews_stars.items())
     context = {
-        'trainers': trainers
+        'trainers': trainers,
+        'reviews_stars': reviews_stars,
     }
     return render(request, 'trainer/trainers-info.html', context)
+
+
+def trainer_info(request, id_trainer):
+    return render(request, 'trainer/trainer-info.html')
 
 
 def verification(request, uidb64, token):

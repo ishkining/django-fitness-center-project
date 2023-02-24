@@ -71,5 +71,11 @@ class Reviews(models.Model):
         unique_together = (('user', 'trainer'),)
         index_together = (('user', 'trainer'),)
 
+    def get_short_description(self):
+        if len(self.description) > 175:
+            return self.description[:175] + '...'
+        else:
+            return self.description
+
     def __str__(self):
         return f'Звезд - {self.stars} от: {self.user} кому: {self.trainer}'

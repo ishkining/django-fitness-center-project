@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.sites.shortcuts import get_current_site
 
 from django.template.loader import render_to_string
@@ -106,7 +106,25 @@ def trainers_info(request):
 
 
 def trainer_info(request, id_trainer):
-    return render(request, 'trainer/trainer-info.html')
+    trainer_category = CategoryPerson.objects.get(category='T')
+    trainer = get_object_or_404(UserInfo, pk=id_trainer, category=trainer_category)
+    image = Images.objects.filter(user=trainer)[0]
+    reviews = Reviews.objects.filter(trainer=trainer)
+    context = {
+        'trainer': trainer,
+        'reviews': reviews,
+        'image': image,
+    }
+    return render(request, 'trainer/trainer-info.html', context)
+
+
+def review_info(request, id_review):
+    review = get_object_or_404(Reviews, pk=id_review)
+    context = {
+        'review': review,
+        'lost_stars': (5 - review.stars),
+    }
+    return render(request, 'trainer/review-info.html', context)
 
 
 def verification(request, uidb64, token):

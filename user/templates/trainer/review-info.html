@@ -1,0 +1,54 @@
+{% include "about/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+<main class="pt-5">
+    <div class="container">
+        <h1 class="h5"> Информация об отзыве: </h1>
+        <hr>
+        <br>
+        <div class="row mb-4 border product-item">
+            <div class="col-md-3 col-lg-2 order-md-first bg-light">
+                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image"
+                     src="{% static 'media/images/faceless.png' %}">
+            </div>
+            <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+                <a href="" class="text-info">
+                    <h1 class="h5 pt-2">  </h1>
+                </a>
+                <div class="border">
+                    <div class="col border-bottom">
+                        <div class="row p-3">
+                            <div class="col-12">
+                                <h5>Пользователь: {{ review.user.get_full_name}}</h5>
+                                Оценка :
+                                {% for i in review.stars|get_range %}
+                                    <i class="fa fa-star text-success" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% for i in lost_stars|get_range %}
+                                    <i class="fa fa-star-o text-danger" aria-hidden="true"></i>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col border-bottom">
+                        <div class="row p-3">
+                            <div class="col-12">
+                                <h5>Описание:</h5>
+                                <p>{{ review.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+
+

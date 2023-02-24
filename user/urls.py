@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('trainers/', views.trainers_info, name='trainers-info'),
     path('trainers/<int:id_trainer>', views.trainer_info, name='trainer-info'),
+    path('reviews/<int:id_review>', views.review_info, name='review-info'),
 
     path('verification/<str:uidb64>/<str:token>/', views.verification, name='verification'),
     path('verification-sent', views.verification_sent, name='verification-sent'),

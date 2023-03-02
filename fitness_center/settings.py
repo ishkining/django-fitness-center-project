@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'about',
     'user',
+    'schedule',
 
     'crispy_forms',
 ]
